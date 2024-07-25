@@ -3,6 +3,7 @@ name: cfip
 on:
   schedule:
     - cron: '00 2 * * *'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -35,7 +36,7 @@ jobs:
       run: pip install -r ./requirements.txt
 
     - name: 运行 main.py
-      run: python ./main.py
+      run: python main.py
 
     - name: 提交并推送更改
       run: |
