@@ -40,8 +40,8 @@ jobs:
 
     - name: 提交并推送更改
       run: |
-        git config --local user.email "zimamaxiaoan@outlook.com"
-        git config --local user.name "hhyyx1"
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
         git add .
         git diff --exit-code || git commit -m "更新结果"
         git push origin main
