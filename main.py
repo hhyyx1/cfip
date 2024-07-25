@@ -46,12 +46,14 @@ def gatherip(port):
     filelist = os.listdir(cfiplistDir)
     file_port = [file for file in filelist if file.split("-")[2] == f"{port}.txt"]
     allips = []
+    # output_file = f"ip-{port}.txt"
     for file in file_port:
         allips += get_ip_from_file(cfiplistDir + file)
 
     return list(set(allips))
 
 def process_ipinfo(ipinfo, port):
+    # df = pd.DataFrame(ipinfo)
     save_dir = f"./ip{port}/"
 
     if not os.path.exists(save_dir):
