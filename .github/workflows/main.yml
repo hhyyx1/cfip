@@ -30,18 +30,18 @@ jobs:
     - name: 设置 Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.x'
+        python-version: '3.10'
 
     - name: 安装依赖
       run: pip install -r ./requirements.txt
 
     - name: 运行 main.py
-      run: python3 ./main.py
+      run: python main.py
 
     - name: 提交并推送更改
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add .
-        git diff --exit-code || git commit -m "更新结果"
+        git commit -am "更新结果"
         git push origin main
