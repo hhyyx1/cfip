@@ -38,6 +38,21 @@ jobs:
     - name: 运行 main.py
       run: python main.py
 
+    - name: 运行 main2.py
+      run: python main2.py
+
+    - name: 运行 main3.py
+      run: python main3.py
+
+    - name: 运行 main4.py
+      run: python main4.py
+
+    - name: 运行 main5.py
+      run: python main5.py
+
+    - name: 运行 main6.py
+      run: python main6.py
+
     - name: 提交并推送更改
       run: |
         git config --local user.email "action@github.com"
