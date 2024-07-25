@@ -1,0 +1,46 @@
+name: cfip
+
+on:
+  schedule:
+    - cron: '00 2 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  update_data:
+    runs-on: ubuntu-latest
+
+    steps:
+    - run: echo "开始更新"
+
+    - name: 检出代码
+      uses: actions/checkout@v2
+
+    - name: 删除旧数据
+      run: rm -rf ./ip*
+
+    - name: 获取源数据
+      run: |
+        wget -N https://zip.baipiao.eu.org -O ip.zip
+        unzip ip.zip -d ./ips
+        rm ip.zip
+
+    - name: 设置 Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+
+    - name: 安装依赖
+      run: pip install -r ./requirements.txt
+
+    - name: 运行 main.py
+      run: python main.py
+
+    - name: 提交并推送更改
+      run: |
+        git config --local user.email "zimamaxiaoan@outlook.com"
+        git config --local user.name "hhyyx1"
+        git add .
+        git diff --exit-code || git commit -m "更新结果"
+        git push origin main
