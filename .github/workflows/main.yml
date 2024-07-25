@@ -3,7 +3,7 @@ name: cfip
 on:
   workflow_dispatch:
   schedule:
-    - cron: '00 2 * * *'
+    - cron: '0 */7 * * *'  # 每七小时运行一次，可以根据需求调整时间
 
 permissions:
   contents: write
