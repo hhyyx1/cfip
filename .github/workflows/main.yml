@@ -50,8 +50,8 @@ jobs:
     - name: 运行 main5.py
       run: python main5.py
 
-    - name: 运行 main6.py
-      run: python main6.py
+    # - name: 运行 main6.py
+    #   run: python main6.py
 
     - name: 提交并推送更改
       run: |
