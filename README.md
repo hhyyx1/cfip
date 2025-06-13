@@ -128,4 +128,6 @@ setting2: value2
 
 ---
 
-*注：请根据项目具体情况和技术细节补充和修改对应内容。*
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=hhyyx1/cfip&type=Date)](https://www.star-history.com/#hhyyx1/cfip&Date)
