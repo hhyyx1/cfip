@@ -10,9 +10,9 @@ def get_ip_from_file(filename):
     return ips
 
 def ipinfoapi(ips:list, session):
-    url = 'http://ip-api.com/batch'
+    url = 'https://proxy.nlvps.de5.net/http://ip-api.com/batch'
     ips_dict = [{'query': ip, "fields": "city,country,countryCode,isp,org,as,query"} for ip in ips]
-    sleep(30)
+    sleep(3)
     try:
         with session.post(url, json=ips_dict) as resp:
             if resp.status_code == 200:
@@ -26,7 +26,7 @@ def ipinfoapi(ips:list, session):
 
 def get_ip_info(ips):
     ipsinfo = []
-    url = 'http://ip-api.com/batch'
+    url = 'https://proxy.nlvps.de5.net/http://ip-api.com/batch'
     
     with tqdm(total=len(ips)) as bar:
         bar.set_description(f"Processed IP: {len(ips)}")
