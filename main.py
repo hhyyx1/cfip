@@ -32,31 +32,26 @@ def get_ip_info(ips):
         bar.set_description(f"Processed IP: {len(ips)}")
         with requests.Session() as session:
             for i in range(0, len(ips), 100):
-                count = min(i+100, len(ips))
                 t = ipinfoapi(ips[i:i + 100], session)
                 if t is not None:
                     ipsinfo += t
-                bar.update(100)
+                bar.update(min(100, len(ips) - i))
 
     return ipsinfo
 
 def gatherip(port):
     cfiplistDir = "./ips/"
-    filelist = os.listdir(cfiplistDir)
-    file_port = []
-
-    for file in filelist:
-        parts = file.split("-")
-        # 情况1：文件名是 ip-{port}.txt
-        if file == f"ip-{port}.txt":
-            file_port.append(file)
-        # 情况2：文件名至少有三段，最后一段是 {port}.txt
-        elif len(parts) > 2 and parts[2] == f"{port}.txt":
-            file_port.append(file)
-
     allips = []
-    for file in file_port:
-        allips += get_ip_from_file(os.path.join(cfiplistDir, file))
+
+    # 遍历 ./ips/ 下的所有子目录
+    for subdir in os.listdir(cfiplistDir):
+        subdir_path = os.path.join(cfiplistDir, subdir)
+        if os.path.isdir(subdir_path):
+            # 遍历子目录里的所有 txt 文件
+            for file in os.listdir(subdir_path):
+                if file.endswith(".txt"):
+                    filepath = os.path.join(subdir_path, file)
+                    allips += get_ip_from_file(filepath)
 
     return list(set(allips))
 
