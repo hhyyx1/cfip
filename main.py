@@ -34,7 +34,7 @@ def get_ip_info(ips):
             for i in range(0, len(ips), 100):
                 count = min(i+100, len(ips))
                 t = ipinfoapi(ips[i:i + 100], session)
-                if t != None:
+                if t is not None:
                     ipsinfo += t
                 bar.update(100)
 
@@ -42,18 +42,25 @@ def get_ip_info(ips):
 
 def gatherip(port):
     cfiplistDir = "./ips/"
-
     filelist = os.listdir(cfiplistDir)
-    file_port = [file for file in filelist if file.split("-")[2] == f"{port}.txt"]
+    file_port = []
+
+    for file in filelist:
+        parts = file.split("-")
+        # 情况1：文件名是 ip-{port}.txt
+        if file == f"ip-{port}.txt":
+            file_port.append(file)
+        # 情况2：文件名至少有三段，最后一段是 {port}.txt
+        elif len(parts) > 2 and parts[2] == f"{port}.txt":
+            file_port.append(file)
+
     allips = []
-    # output_file = f"ip-{port}.txt"
     for file in file_port:
-        allips += get_ip_from_file(cfiplistDir + file)
+        allips += get_ip_from_file(os.path.join(cfiplistDir, file))
 
     return list(set(allips))
 
 def process_ipinfo(ipinfo, port):
-    # df = pd.DataFrame(ipinfo)
     save_dir = f"./ip{port}/"
 
     if not os.path.exists(save_dir):
@@ -62,7 +69,7 @@ def process_ipinfo(ipinfo, port):
     grouped = pd.DataFrame(ipinfo).groupby('countryCode')
     for countryCode, group in grouped:
         only_ip = group['query'].drop_duplicates()
-        only_ip.to_csv(save_dir + countryCode + '.txt', header=None, index=False)
+        only_ip.to_csv(os.path.join(save_dir, countryCode + '.txt'), header=None, index=False)
 
 def main(port):
     ips = gatherip(port)
