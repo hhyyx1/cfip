@@ -23,7 +23,7 @@ jobs:
 
     - name: 获取源数据
       run: |
-        wget -N https://zip.baipiao.eu.org -O ip.zip
+        wget -N https://zip.cm.edu.kg -O ip.zip
         unzip ip.zip -d ./ips
         rm ip.zip
 
